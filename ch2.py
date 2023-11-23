@@ -1,4 +1,4 @@
-def unify_vars(var, x, substitution):
+def unifyVars(var, x, substitution):
     if var != x:
         if is_variable(var):
             substitution[var] = x
@@ -8,7 +8,7 @@ def unify_vars(var, x, substitution):
             return None
     return substitution
 
-def unify_lists(list1, list2, substitution):
+def lists(list1, list2, substitution):
     if len(list1) != len(list2):
         return None
     for term1, term2 in zip(list1, list2):
@@ -20,17 +20,14 @@ def unify_lists(list1, list2, substitution):
 def unify(term1, term2, substitution=None):
     if substitution is None:
         substitution = {}
-
     if term1 == term2:
         return substitution
-
     if is_variable(term1):
-        return unify_vars(term1, term2, substitution)
+        return unifyVars(term1, term2, substitution)
     elif is_variable(term2):
-        return unify_vars(term2, term1, substitution)
+        return unifyVars(term2, term1, substitution)
     elif is_compound(term1) and is_compound(term2):
-        return unify_lists(term1, term2, substitution)
-
+        return lists(term1, term2, substitution)
     return None
 
 def is_variable(term):
@@ -40,7 +37,6 @@ def is_compound(term):
     return isinstance(term, list)
 
 W = [['Q', ['f','a'], ['f','y']], ['Q', 'y', 'y', ['f','a']]]
-print("Input W:", W)
-
+print("W:", W)
 result = unify(W[0], W[1])
 print("Substitution:", result)
